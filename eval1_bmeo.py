@@ -16,11 +16,11 @@ f_type = 'micro'
     
 
 
-
-def _bmeso_tag_to_spans(tags, ignore_labels=None):
+def _bmes_tag_to_spans(tags, ignore_labels=None):
     r"""
-    给定一个tags的lis，比如['O', 'B-singer', 'M-singer', 'E-singer', 'O', 'O']。
-    返回[('singer', (1, 4))] (左闭右开区间)
+    给定一个tags的lis，比如['S-song', 'B-singer', 'M-singer', 'E-singer', 'S-moive', 'S-actor']。
+    返回[('song', (0, 1)), ('singer', (1, 4)), ('moive', (4, 5)), ('actor', (5, 6))] (左闭右开区间)
+    也可以是单纯的['S', 'B', 'M', 'E', 'B', 'M', 'M',...]序列
 
     :param tags: List[str],
     :param ignore_labels: List[str], 在该list中的label将被忽略
@@ -37,8 +37,6 @@ def _bmeso_tag_to_spans(tags, ignore_labels=None):
             spans.append((label, [idx, idx]))
         elif bmes_tag in ('m', 'e') and prev_bmes_tag in ('b', 'm') and label == spans[-1][0]:
             spans[-1][1][1] = idx
-        elif bmes_tag == 'o':
-            pass
         else:
             spans.append((label, [idx, idx]))
         prev_bmes_tag = bmes_tag
@@ -103,7 +101,7 @@ def _compute_f_pre_rec(beta_square, tp, fn, fp):
 # eval_file = '/data1/zbh/pre_trainmodel/ner_model/0415yuanshi/label_dev.txt'
 # eval_file = '/data/zbh/yuanshi_bert/BERT-NER-master_tf/fastnlp/result.txt'
 
-eval_file = '/data1/zbh/pre_trainmodel/ner_model/0427nosin_nonsp_softatt_100w_weibo/label50w.txt'
+eval_file = '/data1/zbh/pre_trainmodel/ner_model/0425yuanshi_ontoNote/label50w.txt'
 
 
 
@@ -197,8 +195,8 @@ for line in x1:
 
 _true_positives, _false_positives, _false_negatives = {},{},{}
 
-label_g1 = _bio_tag_to_spans(label_gold)
-label_p1 = _bio_tag_to_spans(label_pred)
+label_g1 = _bmes_tag_to_spans(label_gold)
+label_p1 = _bmes_tag_to_spans(label_pred)
 
 
 

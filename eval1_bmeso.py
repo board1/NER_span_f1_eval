@@ -103,7 +103,7 @@ def _compute_f_pre_rec(beta_square, tp, fn, fp):
 # eval_file = '/data1/zbh/pre_trainmodel/ner_model/0415yuanshi/label_dev.txt'
 # eval_file = '/data/zbh/yuanshi_bert/BERT-NER-master_tf/fastnlp/result.txt'
 
-eval_file = '/data1/zbh/pre_trainmodel/ner_model/0427nosin_nonsp_softatt_100w_weibo/label50w.txt'
+eval_file = '/data1/zbh/pre_trainmodel/ner_model/0425yuanshi_ontoNote/label50w.txt'
 
 
 
@@ -197,8 +197,8 @@ for line in x1:
 
 _true_positives, _false_positives, _false_negatives = {},{},{}
 
-label_g1 = _bio_tag_to_spans(label_gold)
-label_p1 = _bio_tag_to_spans(label_pred)
+label_g1 = _bmeso_tag_to_spans(label_gold)
+label_p1 = _bmeso_tag_to_spans(label_pred)
 
 
 
